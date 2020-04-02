@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 
 class Home extends StatefulWidget {
   @override
@@ -6,13 +8,37 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+
+  String _emailUsuario= "";
+
+  Future _recuperarDadosUsuario() async {
+
+    FirebaseAuth auth = FirebaseAuth.instance;
+    FirebaseUser usuarioLogado = await auth.currentUser();
+
+    setState(() {
+      _emailUsuario = usuarioLogado.email;
+    });
+
+  }
+
+  @override
+  void initState() {
+
+
+    _recuperarDadosUsuario();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(" MecanicaSystem Chat"),
+        title: Text("WhatsApp"),
       ),
-  body: Container(),
+      body: Container(
+        child: Text(_emailUsuario),
+      ),
     );
   }
 }

@@ -12,9 +12,6 @@ void main(){
     ),
     debugShowCheckedModeBanner: false,
   ));
-  
-  Firestore.instance.collection("usuarios")
-    .document("001")
-    .setData({"nome":"Tardio"});
+
   
 }
