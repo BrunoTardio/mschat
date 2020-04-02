@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mschat/model/Usuario.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'Home.dart';
 
 class Cadastro extends StatefulWidget {
@@ -68,7 +68,14 @@ class _CadastroState extends State<Cadastro> {
   auth.createUserWithEmailAndPassword(
       email: usuario.email,
       password: usuario.senha).then((firebaseUser){
-Navigator.push(context, MaterialPageRoute(builder:(context)=> Home()
+
+        Firestore db = Firestore.instance;
+        db.collection("usuarios")
+            .document(firebaseUser.user.uid)
+            .setData(usuario.toMap());
+        print(firebaseUser.user.uid);
+
+Navigator.pushReplacement(context, MaterialPageRoute(builder:(context)=> Home()
 ));
         
         

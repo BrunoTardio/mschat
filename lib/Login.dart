@@ -15,8 +15,8 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
 
-  TextEditingController _controllerEmail = TextEditingController(text: "jamilton@gmail.com");
-  TextEditingController _controllerSenha = TextEditingController(text: "1234567");
+  TextEditingController _controllerEmail = TextEditingController();
+  TextEditingController _controllerSenha = TextEditingController();
   String _mensagemErro = "";
 
   _validarCampos(){
@@ -88,7 +88,7 @@ class _LoginState extends State<Login> {
     FirebaseUser usuarioLogado = await auth.currentUser();
 
     if( usuarioLogado != null ){
-      Navigator.push(
+      Navigator.pushReplacement(
           context,
           MaterialPageRoute(
               builder: (context) => Home()
