@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mschat/telas/AbaContatos.dart';
+import 'package:mschat/telas/AbaConversas.dart';
 
 
 class Home extends StatefulWidget {
@@ -8,9 +9,10 @@ class Home extends StatefulWidget {
   _HomeState createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
+class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   TabController _tabController;
+
   String _emailUsuario= "";
 
   Future _recuperarDadosUsuario() async {
@@ -26,46 +28,43 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
 
   @override
   void initState() {
-
-
-    _recuperarDadosUsuario();
     super.initState();
+
     _recuperarDadosUsuario();
+
     _tabController = TabController(
-      length: 2,
-      vsync: this
+        length: 2,
+        vsync: this
     );
+
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("MecanicaSystem Chat"),
+        title: Text("MecanicaSystem Chat App"),
         bottom: TabBar(
-          indicatorWeight:4 ,
+          indicatorWeight: 4,
           labelStyle: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold
-
+              fontSize: 18,
+              fontWeight: FontWeight.bold
           ),
           controller: _tabController,
           indicatorColor: Colors.white,
           tabs: <Widget>[
-            Tab(text:"Conversas",),
-            Tab(text: "Contatos",),
-
+            Tab(text: "Conversas",),
+            Tab(text: "Contatos",)
           ],
         ),
       ),
-      body:TabBarView(
+      body: TabBarView(
         controller: _tabController,
         children: <Widget>[
-          AbaContatos(),
-          AbaContatos(),
+          AbaConversas(),
+          AbaContatos()
         ],
-      )
-
+      ),
     );
   }
 }

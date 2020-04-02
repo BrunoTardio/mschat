@@ -88,7 +88,7 @@ class _LoginState extends State<Login> {
     FirebaseUser usuarioLogado = await auth.currentUser();
 
     if( usuarioLogado != null ){
-      Navigator.pushReplacement(
+      Navigator.push(
           context,
           MaterialPageRoute(
               builder: (context) => Home()
