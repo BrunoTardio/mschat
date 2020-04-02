@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:mschat/Cadastro.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -75,7 +76,11 @@ class _LoginState extends State<Login> {
                   ),
                 ),
                 onTap: (){
-
+              Navigator.push(
+                context,MaterialPageRoute(
+                builder: (context)=> Cadastro()
+              )
+              );
                 },
               ),
 
@@ -83,6 +88,7 @@ class _LoginState extends State<Login> {
           ],
         )),
       ),
-    ));
+    )
+    );
   }
 }
