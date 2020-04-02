@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "3356302776",
+    "firebase_url": "https://mschat-91ab9.firebaseio.com",
+    "project_id": "mschat-91ab9",
+    "storage_bucket": "mschat-91ab9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:3356302776:android:a2992af75d26bba888834d",
+        "android_client_info": {
+          "package_name": "br.com.brunotardioti.mschat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "3356302776-7c8simuddmm5tci73jl08iv2bl5v6nak.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAZJa05_sP3Btd_6X12Bd1YwRJHqJ62Go"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "3356302776-7c8simuddmm5tci73jl08iv2bl5v6nak.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
