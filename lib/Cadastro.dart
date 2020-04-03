@@ -75,7 +75,7 @@ class _CadastroState extends State<Cadastro> {
             .setData(usuario.toMap());
         print(firebaseUser.user.uid);
 
-Navigator.push(context, MaterialPageRoute(builder:(context)=> Home()
+Navigator.pushReplacement(context, MaterialPageRoute(builder:(context)=> Home()
 ));
         
         
