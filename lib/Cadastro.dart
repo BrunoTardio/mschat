@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:mschat/RouteGenerator.dart';
 import 'package:mschat/model/Usuario.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'Home.dart';
@@ -65,6 +66,7 @@ class _CadastroState extends State<Cadastro> {
   _cadastrarUsuario(Usuario usuario){
   FirebaseAuth auth = FirebaseAuth.instance;
 
+
   auth.createUserWithEmailAndPassword(
       email: usuario.email,
       password: usuario.senha).then((firebaseUser){
@@ -75,18 +77,17 @@ class _CadastroState extends State<Cadastro> {
             .setData(usuario.toMap());
         print(firebaseUser.user.uid);
 
-Navigator.pushReplacement(context, MaterialPageRoute(builder:(context)=> Home()
-));
+        Navigator.pushNamedAndRemoveUntil(context, RouteGenerator.ROTA_HOME, (_)=>false);
         
         
   }).catchError((error){
     setState(() {
       _mensagemErro = "Erro ao cadastrar o usuario ";
     });
-
-
-
   });
+
+
+
   }
 
   @override

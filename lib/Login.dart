@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mschat/Cadastro.dart';
+import 'package:mschat/RouteGenerator.dart';
 
 import 'Home.dart';
 import 'model/Usuario.dart';
@@ -63,12 +64,7 @@ class _LoginState extends State<Login> {
         password: usuario.senha
     ).then((firebaseUser){
 
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => Home()
-          )
-      );
+      Navigator.pushReplacementNamed(context, RouteGenerator.ROTA_HOME);
 
     }).catchError((error){
 
@@ -88,12 +84,9 @@ class _LoginState extends State<Login> {
     FirebaseUser usuarioLogado = await auth.currentUser();
 
     if( usuarioLogado != null ){
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-              builder: (context) => Home()
-          )
-      );
+
+      Navigator.pushReplacementNamed(context, RouteGenerator.ROTA_HOME);
+
     }
 
   }
