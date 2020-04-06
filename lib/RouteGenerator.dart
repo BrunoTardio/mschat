@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mschat/Configuracoes.dart';
+import 'package:mschat/Mensagens.dart';
 
 import 'Cadastro.dart';
 import 'Home.dart';
@@ -11,7 +12,12 @@ class RouteGenerator {
   static const String ROTA_CADASTRO = "/cadastro";
   static const String ROTA_CONFIGURACOES = "configuracoes";
 
+
+
   static Route<dynamic> generateRoute(RouteSettings settings) {
+
+    final args = settings.arguments;
+
     switch (settings.name) {
       case "/":
         return MaterialPageRoute(builder: (_) => Login());
@@ -23,6 +29,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => Home());
       case ROTA_CONFIGURACOES:
         return MaterialPageRoute(builder: (_) => Configuracoes());
+      case "/mensagens":
+        return MaterialPageRoute(builder: (_) => Mensagens(args));
       default:
         _erroRota();
     }

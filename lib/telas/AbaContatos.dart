@@ -73,10 +73,18 @@ class _AbaContatosState extends State<AbaContatos> {
             return ListView.builder(
                 itemCount: snapshot.data.length,
                 itemBuilder: (_, indice) {
+
                   List<Usuario> listaItens = snapshot.data;
                   Usuario usuario = listaItens[indice];
 
                   return ListTile(
+                    onTap: (){
+                      Navigator.pushNamed(
+                          context,
+                          "/mensagens",
+                          arguments: usuario
+                      );
+                    },
                     contentPadding: EdgeInsets.fromLTRB(16, 8, 16, 8),
                     leading: CircleAvatar(
                         maxRadius: 30,
