@@ -5,6 +5,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
+import 'model/Conversa.dart';
 import 'model/Mensagem.dart';
 import 'model/Usuario.dart';
 
@@ -44,13 +45,13 @@ class _MensagensState extends State<Mensagens> {
       _salvarMensagem(_idUsuarioDestinatario, _idUsuarioLogado, mensagem);
 
       //Salvar conversa
-   //   _salvarConversa( mensagem );
+     _salvarConversa( mensagem );
 
 
     }
   }
 
- /* _salvarConversa(Mensagem msg){
+ _salvarConversa(Mensagem msg){
 
     //Salvar conversa remetente
     Conversa cRemetente = Conversa();
@@ -72,7 +73,7 @@ class _MensagensState extends State<Mensagens> {
     cDestinatario.tipoMensagem = msg.tipo;
     cDestinatario.salvar();
 
-  }*/
+  }
 
   _salvarMensagem(
       String idRemetente, String idDestinatario, Mensagem msg) async {
