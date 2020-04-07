@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
@@ -19,7 +22,6 @@ class Mensagens extends StatefulWidget {
   _MensagensState createState() => _MensagensState();
 }
 
-
 class _MensagensState extends State<Mensagens> {
 
   File _imagem;
@@ -28,6 +30,9 @@ class _MensagensState extends State<Mensagens> {
   String _idUsuarioDestinatario;
   Firestore db = Firestore.instance;
   TextEditingController _controllerMensagem = TextEditingController();
+
+  final _controller = StreamController<QuerySnapshot>.broadcast();
+  ScrollController _scrollController = ScrollController();
 
   _enviarMensagem() {
     String textoMensagem = _controllerMensagem.text;
@@ -45,13 +50,13 @@ class _MensagensState extends State<Mensagens> {
       _salvarMensagem(_idUsuarioDestinatario, _idUsuarioLogado, mensagem);
 
       //Salvar conversa
-     _salvarConversa( mensagem );
+      _salvarConversa( mensagem );
 
 
     }
   }
 
- _salvarConversa(Mensagem msg){
+  _salvarConversa(Mensagem msg){
 
     //Salvar conversa remetente
     Conversa cRemetente = Conversa();
@@ -149,8 +154,26 @@ class _MensagensState extends State<Mensagens> {
     FirebaseAuth auth = FirebaseAuth.instance;
     FirebaseUser usuarioLogado = await auth.currentUser();
     _idUsuarioLogado = usuarioLogado.uid;
-
     _idUsuarioDestinatario = widget.contato.idUsuario;
+
+    _adicionarListenerMensagens();
+
+  }
+
+  Stream<QuerySnapshot> _adicionarListenerMensagens(){
+
+    final stream = db.collection("mensagens")
+        .document(_idUsuarioLogado)
+        .collection(_idUsuarioDestinatario)
+        .snapshots();
+
+    stream.listen((dados){
+      _controller.add( dados );
+      Timer(Duration(seconds: 1), (){
+        _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+      } );
+    });
+
   }
 
   @override
@@ -189,7 +212,12 @@ class _MensagensState extends State<Mensagens> {
               ),
             ),
           ),
-          FloatingActionButton(
+          Platform.isIOS
+              ? CupertinoButton(
+            child: Text("Enviar"),
+            onPressed: _enviarMensagem,
+          )
+              : FloatingActionButton(
             backgroundColor: Color(0xff075E54),
             child: Icon(
               Icons.send,
@@ -203,11 +231,7 @@ class _MensagensState extends State<Mensagens> {
     );
 
     var stream = StreamBuilder(
-      stream: db
-          .collection("mensagens")
-          .document(_idUsuarioLogado)
-          .collection(_idUsuarioDestinatario)
-          .snapshots(),
+      stream: _controller.stream,
       builder: (context, snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.none:
@@ -227,12 +251,11 @@ class _MensagensState extends State<Mensagens> {
             QuerySnapshot querySnapshot = snapshot.data;
 
             if (snapshot.hasError) {
-              return Expanded(
-                child: Text("Erro ao carregar os dados!"),
-              );
+              return Text("Erro ao carregar os dados!");
             } else {
               return Expanded(
                 child: ListView.builder(
+                    controller: _scrollController,
                     itemCount: querySnapshot.documents.length,
                     itemBuilder: (context, indice) {
 

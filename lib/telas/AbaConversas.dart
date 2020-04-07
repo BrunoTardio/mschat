@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mschat/model/Conversa.dart';
+import 'package:mschat/model/Usuario.dart';
 
 
 class AbaConversas extends StatefulWidget {
@@ -57,6 +58,12 @@ class _AbaConversasState extends State<AbaConversas> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    _controller.close();
+  }
+
+  @override
   Widget build(BuildContext context) {
 
     return StreamBuilder<QuerySnapshot>(
@@ -105,8 +112,21 @@ class _AbaConversasState extends State<AbaConversas> {
                     String tipo       = item["tipoMensagem"];
                     String mensagem   = item["mensagem"];
                     String nome       = item["nome"];
+                    String idDestinatario       = item["idDestinatario"];
+
+                    Usuario usuario = Usuario();
+                    usuario.nome = nome;
+                    usuario.urlImagem = urlImagem;
+                    usuario.idUsuario = idDestinatario;
 
                     return ListTile(
+                      onTap: (){
+                        Navigator.pushNamed(
+                            context,
+                            "/mensagens",
+                            arguments: usuario
+                        );
+                      },
                       contentPadding: EdgeInsets.fromLTRB(16, 8, 16, 8),
                       leading: CircleAvatar(
                         maxRadius: 30,
